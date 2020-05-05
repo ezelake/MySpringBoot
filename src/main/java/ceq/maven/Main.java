@@ -4,17 +4,36 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.templateresolver.FileTemplateResolver;
 
 @RestController
 @SpringBootApplication
 public class Main {
 
+	static TemplateEngine templateEngine = null;
+	
+	static {
+		templateEngine = new TemplateEngine();
+		FileTemplateResolver fileTemplateResolver = new FileTemplateResolver();
+		fileTemplateResolver.setSuffix(".html");
+		fileTemplateResolver.setPrefix("src/main/resources/templates/");
+		fileTemplateResolver.setTemplateMode("HTML5");
+		fileTemplateResolver.setCharacterEncoding("UTF-8");
+		fileTemplateResolver.setCacheable(false);
+		templateEngine.setTemplateResolver(fileTemplateResolver);
+	}
+	
 	public static void main(String[] args) {
 		SpringApplication.run(Main.class, args);
 	}
 
 	@RequestMapping("/")
 	public String hola() {
+		Context context = new Context();
+		context.setVariable("mytex", "nuevo");
+		System.out.println(templateEngine.process("Index", context));
 		return "Hola";
 	}
 
