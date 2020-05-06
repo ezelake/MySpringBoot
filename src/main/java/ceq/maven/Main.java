@@ -19,7 +19,7 @@ public class Main {
 		FileTemplateResolver fileTemplateResolver = new FileTemplateResolver();
 		fileTemplateResolver.setSuffix(".html");
 		fileTemplateResolver.setPrefix("src/main/resources/templates/");
-		fileTemplateResolver.setTemplateMode("HTML5");
+		fileTemplateResolver.setTemplateMode("HTML");
 		fileTemplateResolver.setCharacterEncoding("UTF-8");
 		fileTemplateResolver.setCacheable(false);
 		templateEngine.setTemplateResolver(fileTemplateResolver);
@@ -31,10 +31,13 @@ public class Main {
 
 	@RequestMapping("/")
 	public String hola() {
-		Context context = new Context();
-		context.setVariable("mytex", "nuevo");
-		System.out.println(templateEngine.process("Index", context));
 		return "Hola";
 	}
 
+	@RequestMapping("/thyme")
+	public String thyme() {
+		Context context = new Context();
+		context.setVariable("mytext", "nuevo");
+		return templateEngine.process("Index", context);
+	}
 }
