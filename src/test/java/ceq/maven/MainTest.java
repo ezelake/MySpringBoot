@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public class MainTest {
@@ -22,4 +23,17 @@ public class MainTest {
 		assertEquals("Hola", entity.getBody());
 	}
 
+	@Test
+	public void testThyme() {
+		String url = "http://localhost:8080/thyme";
+		ResponseEntity<String> entity = new TestRestTemplate().getForEntity(url, String.class);
+		assertEquals(HttpStatus.OK, entity.getStatusCode());
+	}
+
+	@Test
+	public void testDbmem() {
+		String url = "http://localhost:8080/dbmem";
+		ResponseEntity<Boolean> entity = new TestRestTemplate().getForEntity(url, Boolean.class);
+		assertEquals(true, entity.getBody());
+	}
 }

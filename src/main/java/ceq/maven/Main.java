@@ -1,5 +1,7 @@
 package ceq.maven;
 
+import java.sql.SQLException;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
+
+import ceq.maven.h2.Connector;
 
 @RestController
 @SpringBootApplication
@@ -39,5 +43,14 @@ public class Main {
 		Context context = new Context();
 		context.setVariable("mytext", "nuevo");
 		return templateEngine.process("Index", context);
+	}
+
+	@RequestMapping("/dbmem")
+	public boolean dbMem() {
+		try {
+			return ! Connector.getConnection().isClosed();
+		} catch (SQLException e) {
+			return false;
+		}
 	}
 }
