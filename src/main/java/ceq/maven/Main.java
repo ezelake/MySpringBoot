@@ -2,6 +2,7 @@ package ceq.maven;
 
 import java.sql.SQLException;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,9 @@ import ceq.maven.h2.Connector;
 @RestController
 @SpringBootApplication
 public class Main {
+	
+	@Value("${ceq.text:ZZZ}")
+	private String text;
 
 	static TemplateEngine templateEngine = null;
 	
@@ -30,7 +34,8 @@ public class Main {
 	}
 	
 	public static void main(String[] args) {
-		SpringApplication.run(Main.class, args);
+		SpringApplication application = new SpringApplication(Main.class);
+		application.run();
 	}
 
 	@RequestMapping("/")
@@ -41,7 +46,7 @@ public class Main {
 	@RequestMapping("/thyme")
 	public String thyme() {
 		Context context = new Context();
-		context.setVariable("mytext", "nuevo");
+		context.setVariable("mytext", text);
 		return templateEngine.process("Index", context);
 	}
 

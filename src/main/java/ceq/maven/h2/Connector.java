@@ -4,13 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class Connector {
-	
+
 	static Connection conn = null;
-	
+
 	static {
 		try {
-			Class.forName ("org.h2.Driver");
-			conn = DriverManager.getConnection ("jdbc:h2:mem:testdb", "sa","");
+			Class.forName("org.h2.Driver");
+			conn = DriverManager.getConnection("jdbc:h2:mem:testdb", "sa", "");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -19,4 +19,5 @@ public class Connector {
 	static public Connection getConnection() {
 		return conn;
 	}
+	
 }
