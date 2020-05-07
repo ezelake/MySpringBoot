@@ -36,4 +36,20 @@ public class MainTest {
 		ResponseEntity<Boolean> entity = new TestRestTemplate().getForEntity(url, Boolean.class);
 		assertEquals(true, entity.getBody());
 	}
+	
+	@Test
+	public void testUsers() {
+		String url = "http://localhost:8080/users/jaime";
+		ResponseEntity<String> entity = new TestRestTemplate().getForEntity(url, String.class);
+		System.out.println(entity.getBody());
+
+		url = "http://localhost:8080/users/jaime/customers";
+		entity = new TestRestTemplate().getForEntity(url, String.class);
+		System.out.println(entity.getBody());
+
+		url = "http://localhost:8080/users/X";
+		entity = new TestRestTemplate().getForEntity(url, String.class);
+		System.out.println(entity.getBody());
+
+	}
 }
