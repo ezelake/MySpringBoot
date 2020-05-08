@@ -1,12 +1,17 @@
 package ceq.maven;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import ceq.maven.data.Person;
 
 public class MainTest {
 	
@@ -55,6 +60,14 @@ public class MainTest {
 		url = "http://localhost:8080/users/jaime/customers";
 		entity = new TestRestTemplate().getForEntity(url, String.class);
 		assertEquals("[\"Hello jaime\",\"You jaime\"]", entity.getBody());
+	}
+
+	@Test
+	@SuppressWarnings({ "rawtypes"})
+	public void testPersons() {
+		String url = "http://localhost:8080/persons";
+		ResponseEntity<Set> entity = new TestRestTemplate().getForEntity(url, Set.class);
+		assertTrue(entity.getBody().size() > 0);
 	}
 
 }
