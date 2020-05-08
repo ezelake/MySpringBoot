@@ -1,4 +1,4 @@
-package ceq.maven.rest;
+package ceq.maven.controller;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/users")
-public class MyRestController {
+public class UsersController {
 
 	@RequestMapping(value="/{user}", method=RequestMethod.GET)
     public String getUser(@PathVariable String user) {
@@ -21,10 +21,5 @@ public class MyRestController {
     List<String> getUserCustomers(@PathVariable String user) {
         return Arrays.asList("Hello " + user, "You " + user);
     }
-
-	@RequestMapping("/X")
-	public String hola() {
-		return "Hola";
-	}
 
 }

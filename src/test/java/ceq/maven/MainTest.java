@@ -17,8 +17,15 @@ public class MainTest {
 	}
 
 	@Test
-	public void testMain() {
+	public void testIndex() {
 		String url = "http://localhost:8080/";
+		ResponseEntity<String> entity = new TestRestTemplate().getForEntity(url, String.class);
+		assertEquals(HttpStatus.OK, entity.getStatusCode());
+	}
+
+	@Test
+	public void testMain() {
+		String url = "http://localhost:8080/hola";
 		ResponseEntity<String> entity = new TestRestTemplate().getForEntity(url, String.class);
 		assertEquals("Hola", entity.getBody());
 	}
@@ -39,17 +46,15 @@ public class MainTest {
 	
 	@Test
 	public void testUsers() {
-		String url = "http://localhost:8080/users/jaime";
+		String url;
+		
+		url = "http://localhost:8080/users/jaime";
 		ResponseEntity<String> entity = new TestRestTemplate().getForEntity(url, String.class);
-		System.out.println(entity.getBody());
+		assertEquals(">jaime", entity.getBody());
 
 		url = "http://localhost:8080/users/jaime/customers";
 		entity = new TestRestTemplate().getForEntity(url, String.class);
-		System.out.println(entity.getBody());
-
-		url = "http://localhost:8080/users/X";
-		entity = new TestRestTemplate().getForEntity(url, String.class);
-		System.out.println(entity.getBody());
-
+		assertEquals("[\"Hello jaime\",\"You jaime\"]", entity.getBody());
 	}
+
 }
