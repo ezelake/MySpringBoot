@@ -11,8 +11,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import ceq.maven.data.Person;
-
 public class MainTest {
 	
 	@BeforeAll
@@ -29,7 +27,7 @@ public class MainTest {
 	}
 
 	@Test
-	public void testMain() {
+	public void testHola() {
 		String url = "http://localhost:8080/hola";
 		ResponseEntity<String> entity = new TestRestTemplate().getForEntity(url, String.class);
 		assertEquals("Hola", entity.getBody());
@@ -50,6 +48,14 @@ public class MainTest {
 	}
 	
 	@Test
+	@SuppressWarnings({ "rawtypes"})
+	public void testPersons() {
+		String url = "http://localhost:8080/persons";
+		ResponseEntity<Set> entity = new TestRestTemplate().getForEntity(url, Set.class);
+		assertTrue(entity.getBody().size() > 0);
+	}
+
+	@Test
 	public void testUsers() {
 		String url;
 		
@@ -60,14 +66,6 @@ public class MainTest {
 		url = "http://localhost:8080/users/jaime/customers";
 		entity = new TestRestTemplate().getForEntity(url, String.class);
 		assertEquals("[\"Hello jaime\",\"You jaime\"]", entity.getBody());
-	}
-
-	@Test
-	@SuppressWarnings({ "rawtypes"})
-	public void testPersons() {
-		String url = "http://localhost:8080/persons";
-		ResponseEntity<Set> entity = new TestRestTemplate().getForEntity(url, Set.class);
-		assertTrue(entity.getBody().size() > 0);
 	}
 
 }
